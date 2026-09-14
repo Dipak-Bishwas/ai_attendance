@@ -4,33 +4,35 @@ import streamlit as st
 def style_background_home():
     st.markdown("""
         <style>
+            /* Landing Page Background: Modern Deep Slate & Royal Indigo Mesh */
             .stApp {
-                background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #0F172A 100%) !important;
+                background: radial-gradient(ellipse at 50% 0%, #1E1B4B 0%, #0F172A 70%, #090D16 100%) !important;
                 color: #F8FAFC !important;
+                min-height: 100vh !important;
             }
 
-            /* Portal Selection Cards on Landing Page */
+            /* Portal Selection Columns / Cards */
             .stApp div[data-testid="stColumn"] {
-                background: rgba(255, 255, 255, 0.05) !important;
-                backdrop-filter: blur(16px) !important;
-                -webkit-backdrop-filter: blur(16px) !important;
-                border: 1px solid rgba(255, 255, 255, 0.12) !important;
-                padding: 2.2rem 2rem !important;
+                background: rgba(30, 41, 59, 0.45) !important;
+                backdrop-filter: blur(20px) !important;
+                -webkit-backdrop-filter: blur(20px) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                padding: 2.25rem 2rem !important;
                 border-radius: 1.5rem !important;
-                box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4) !important;
-                transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+                box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05) inset !important;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
                 display: flex !important;
                 flex-direction: column !important;
                 justify-content: space-between !important;
             }
 
             .stApp div[data-testid="stColumn"]:hover {
-                transform: translateY(-4px) !important;
-                border-color: rgba(99, 102, 241, 0.5) !important;
-                box-shadow: 0 25px 50px -12px rgba(79, 70, 229, 0.25) !important;
+                transform: translateY(-6px) !important;
+                border-color: rgba(99, 102, 241, 0.6) !important;
+                box-shadow: 0 30px 60px -15px rgba(79, 70, 229, 0.35), 0 0 0 1px rgba(99, 102, 241, 0.4) inset !important;
             }
 
-            /* Responsive tweaks for mobile */
+            /* Responsive Adjustments for Mobile & Tablets */
             @media (max-width: 768px) {
                 .stApp div[data-testid="stColumn"] {
                     padding: 1.5rem 1.25rem !important;
@@ -55,7 +57,7 @@ def style_background_dashboard():
                 border: 1px solid #E2E8F0 !important;
                 border-radius: 1.25rem !important;
                 padding: 1.75rem !important;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.04) !important;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -2px rgba(0, 0, 0, 0.02) !important;
             }
 
             @media (max-width: 768px) {
@@ -71,21 +73,21 @@ def style_background_dashboard():
 def style_base_layout():
     st.markdown("""
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@600;700&display=swap');
 
             /* Global Typography */
             html, body, [class*="css"] {
                 font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
-                letter-spacing: -0.01em;
+                letter-spacing: -0.015em;
             }
 
-            /* Hide top bar & Streamlit branding */
+            /* Hide Top Bar & Streamlit Header */
             #MainMenu, footer, header {
                 visibility: hidden !important;
                 height: 0 !important;
             }
 
-            /* Hide image fullscreen & element toolbar hover buttons */
+            /* Hide Image Fullscreen & Element Toolbars */
             [data-testid="stElementToolbar"],
             button[title="View fullscreen"],
             [data-testid="StyledFullScreenButton"] {
@@ -95,16 +97,16 @@ def style_base_layout():
                 pointer-events: none !important;
             }
 
-            /* Main Container Padding */
+            /* Max Width Container */
             .block-container {
-                max-width: 1120px !important;
-                padding-top: 2rem !important;
-                padding-bottom: 3rem !important;
+                max-width: 1140px !important;
+                padding-top: 1.75rem !important;
+                padding-bottom: 3.5rem !important;
                 padding-left: 1.5rem !important;
                 padding-right: 1.5rem !important;
             }
 
-            /* Headings */
+            /* Typography Hierarchy */
             h1 {
                 font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif !important;
                 font-weight: 700 !important;
@@ -118,21 +120,16 @@ def style_base_layout():
                 letter-spacing: -0.02em !important;
             }
 
-            p, label, span {
-                font-family: 'Plus Jakarta Sans', sans-serif !important;
-            }
-
-            /* Modern Button Design System */
+            /* Button Design System */
             button {
                 font-family: 'Plus Jakarta Sans', sans-serif !important;
                 font-weight: 600 !important;
                 font-size: 0.95rem !important;
                 border-radius: 0.85rem !important;
-                padding: 0.7rem 1.4rem !important;
-                border: 1px solid transparent !important;
+                padding: 0.75rem 1.5rem !important;
+                min-height: 48px !important;
                 transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
                 cursor: pointer !important;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
             }
 
             button[kind="primary"] {
@@ -144,7 +141,7 @@ def style_base_layout():
 
             button[kind="primary"]:hover {
                 transform: translateY(-2px) !important;
-                box-shadow: 0 6px 20px rgba(79, 70, 229, 0.45) !important;
+                box-shadow: 0 8px 25px rgba(79, 70, 229, 0.45) !important;
                 background: linear-gradient(135deg, #4338CA 0%, #4F46E5 100%) !important;
             }
 
@@ -179,7 +176,7 @@ def style_base_layout():
                     padding-right: 1rem !important;
                 }
                 h1 {
-                    font-size: 2rem !important;
+                    font-size: 2.1rem !important;
                 }
                 h2 {
                     font-size: 1.5rem !important;
