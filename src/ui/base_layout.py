@@ -4,40 +4,39 @@ import streamlit as st
 def style_background_home():
     st.markdown("""
         <style>
-            /* Landing Page Background: 21st.dev Modern Minimal Light Aesthetic */
+            @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+            /* Landing Page Background: Clean Crisp White with Soft Ambient Tint */
             .stApp {
-                background: #FAFAFA !important;
-                background-image: radial-gradient(at 50% 0%, rgba(37, 99, 235, 0.05) 0px, transparent 60%) !important;
+                background: #FFFFFF !important;
+                background-image: radial-gradient(at 50% -5%, rgba(79, 70, 229, 0.06) 0px, transparent 65%) !important;
                 color: #09090B !important;
                 min-height: 100vh !important;
             }
 
-            /* Portal Selection Columns / Cards */
+            /* Block container padding */
+            .block-container {
+                max-width: 1200px !important;
+                padding-top: 1rem !important;
+                padding-bottom: 2rem !important;
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
+            }
+
+            /* Typography */
+            .snap-display-title {
+                font-family: 'Syne', 'Plus Jakarta Sans', sans-serif !important;
+                font-weight: 800 !important;
+                letter-spacing: -0.04em !important;
+                line-height: 1.05 !important;
+            }
+
+            /* Reset column styling on home screen to avoid clipping */
             .stApp div[data-testid="stColumn"] {
-                background: #FFFFFF !important;
-                border: 1px solid #E4E4E7 !important;
-                padding: 2rem 1.75rem !important;
-                border-radius: 0.875rem !important;
-                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.03) !important;
-                transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
-                display: flex !important;
-                flex-direction: column !important;
-                justify-content: space-between !important;
-            }
-
-            .stApp div[data-testid="stColumn"]:hover {
-                transform: translateY(-3px) !important;
-                border-color: #93C5FD !important;
-                box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.12), 0 8px 10px -6px rgba(37, 99, 235, 0.06) !important;
-            }
-
-            /* Responsive Adjustments for Mobile & Tablets */
-            @media (max-width: 768px) {
-                .stApp div[data-testid="stColumn"] {
-                    padding: 1.5rem 1.25rem !important;
-                    margin-bottom: 1.25rem !important;
-                    border-radius: 0.75rem !important;
-                }
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
             }
         </style>
     """, unsafe_allow_html=True)
@@ -72,9 +71,9 @@ def style_background_dashboard():
 def style_base_layout():
     st.markdown("""
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Syne:wght@700;800&display=swap');
 
-            /* Global Modern Minimal Typography */
+            /* Global Typography */
             html, body, [class*="css"] {
                 font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
                 letter-spacing: -0.011em;
@@ -97,72 +96,39 @@ def style_base_layout():
                 pointer-events: none !important;
             }
 
-            /* Max Width Container */
-            .block-container {
-                max-width: 1120px !important;
-                padding-top: 1.5rem !important;
-                padding-bottom: 3.5rem !important;
-                padding-left: 1.5rem !important;
-                padding-right: 1.5rem !important;
-            }
-
-            /* Typography Hierarchy */
-            h1 {
-                font-family: 'Plus Jakarta Sans', 'Inter', sans-serif !important;
-                font-weight: 700 !important;
-                letter-spacing: -0.025em !important;
-                line-height: 1.15 !important;
-                color: #09090B !important;
-            }
-
-            h2, h3 {
-                font-family: 'Plus Jakarta Sans', 'Inter', sans-serif !important;
-                font-weight: 600 !important;
-                letter-spacing: -0.02em !important;
-                color: #09090B !important;
-            }
-
-            /* Button Design System: 21st.dev Modern Minimal */
-            button {
-                font-family: 'Inter', sans-serif !important;
-                font-weight: 500 !important;
-                font-size: 0.9rem !important;
-                border-radius: 0.5rem !important;
-                padding: 0.6rem 1.25rem !important;
-                min-height: 42px !important;
-                transition: all 0.15s ease-in-out !important;
-                cursor: pointer !important;
-            }
-
+            /* Primary Button: Black Pill or Electric Blue */
             button[kind="primary"] {
-                background: #2563EB !important;
+                background: #09090B !important;
                 color: #FFFFFF !important;
-                border: 1px solid #1D4ED8 !important;
-                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+                border: 1px solid #09090B !important;
+                border-radius: 9999px !important;
+                font-family: 'Inter', sans-serif !important;
+                font-weight: 600 !important;
+                font-size: 0.92rem !important;
+                padding: 0.65rem 1.6rem !important;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
+                transition: all 0.2s ease !important;
             }
 
             button[kind="primary"]:hover {
-                background: #1D4ED8 !important;
-                border-color: #1E40AF !important;
+                background: #18181B !important;
                 transform: translateY(-1px) !important;
-                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
-            }
-
-            button[kind="primary"]:active {
-                background: #1E40AF !important;
-                transform: translateY(0px) !important;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
             }
 
             button[kind="secondary"] {
                 background: #FFFFFF !important;
                 color: #18181B !important;
                 border: 1px solid #E4E4E7 !important;
+                border-radius: 9999px !important;
+                font-family: 'Inter', sans-serif !important;
+                font-weight: 600 !important;
+                padding: 0.65rem 1.5rem !important;
                 box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
             }
 
             button[kind="secondary"]:hover {
                 background: #F4F4F5 !important;
-                color: #09090B !important;
                 border-color: #D4D4D8 !important;
             }
 
@@ -170,54 +136,12 @@ def style_base_layout():
                 background: transparent !important;
                 color: #52525B !important;
                 border: 1px solid #E4E4E7 !important;
+                border-radius: 0.5rem !important;
             }
 
             button[kind="tertiary"]:hover {
                 background: #F4F4F5 !important;
                 color: #09090B !important;
-                border-color: #D4D4D8 !important;
-            }
-
-            /* Streamlit Inputs & Selectboxes */
-            div[data-baseweb="input"], div[data-baseweb="select"] {
-                border-radius: 0.5rem !important;
-            }
-
-            input, select, textarea {
-                border-radius: 0.5rem !important;
-                font-family: 'Inter', sans-serif !important;
-            }
-
-            /* Streamlit Dialog / Modals */
-            div[data-testid="stDialog"] div[role="dialog"] {
-                border-radius: 0.875rem !important;
-                border: 1px solid #E4E4E7 !important;
-                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
-            }
-
-            /* Dividers */
-            hr {
-                border-color: #E4E4E7 !important;
-                opacity: 0.8 !important;
-                margin: 1.5rem 0 !important;
-            }
-
-            /* Responsive adjustments for phones & small tablets */
-            @media (max-width: 768px) {
-                .block-container {
-                    padding-top: 1rem !important;
-                    padding-left: 1rem !important;
-                    padding-right: 1rem !important;
-                }
-                h1 {
-                    font-size: 2rem !important;
-                }
-                h2 {
-                    font-size: 1.4rem !important;
-                }
-                button {
-                    width: 100% !important;
-                }
             }
         </style>
     """, unsafe_allow_html=True)

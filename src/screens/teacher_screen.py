@@ -288,26 +288,22 @@ def teacher_tab_attendance_records():
 
 def login_teacher(username, password):
     if not username or not password:
-        return False
+        return False, "Username and password cannot be empty."
     
-    teacher = teacher_login(username, password)
+    try:
+        teacher = teacher_login(username, password)
+        if teacher:
+            st.session_state.user_role = 'teacher'
+            st.session_state.teacher_data = teacher
+            st.session_state.is_logged_in = True
+            return True, "Success"
+        return False, "Invalid username or password."
+    except Exception as e:
+        return False, f"Could not connect to Supabase database. Please check your internet connection or .streamlit/secrets.toml settings. ({str(e)})"
 
-    if teacher:
-        st.session_state.user_role ='teacher'
-        st.session_state.teacher_data = teacher
-        st.session_state.is_logged_in = True
-        return True
-    
 
-    return False
 def teacher_screen_login():
-    c1, c2 = st.columns(2, vertical_alignment='center', gap='xxlarge')
-    with c1:
-        header_dashboard()
-    with c2:
-        if st.button("Go back to Home", type='secondary', key='loginbackbtn', shortcut="control+backspace"):
-            st.session_state['login_type'] = None
-            st.rerun()
+    header_dashboard()
 
     st.header('Login using password', text_alignment='center')
     st.space()
@@ -324,13 +320,14 @@ def teacher_screen_login():
 
     with btnc1:
         if st.button('Login', icon=':material/passkey:', shortcut='control+enter', width='stretch'):
-            if login_teacher(teacher_username, teacher_pass):
+            success, message = login_teacher(teacher_username, teacher_pass)
+            if success:
                 st.toast("welcome back!", icon="👋")
                 import time
                 time.sleep(1)
                 st.rerun()
             else:
-                st.error("Invalid username and password combo")
+                st.error(message)
 
     with btnc2:
         if st.button('Register Instead', type="primary", icon=':material/passkey:', width='stretch'):
@@ -343,28 +340,20 @@ def teacher_screen_login():
 def register_teacher(teacher_username, teacher_name, teacher_pass, teacher_pass_confirm):
     if not teacher_username or not teacher_name or not teacher_pass:
         return False, "All Fields are required!"
-    if check_teacher_exists(teacher_username):
-        return False, "Username already taken"
     if teacher_pass != teacher_pass_confirm:
-        return False, "Password doesn't match"
+        return False, "Passwords do not match!"
     
     try:
+        if check_teacher_exists(teacher_username):
+            return False, "Username already taken!"
         create_teacher(teacher_username, teacher_pass, teacher_name)
-        return True, "Sucessfully Created! Login Now"
+        return True, "Successfully Created! Login Now"
     except Exception as e:
-        return False, "Unexpected Error!"
+        return False, f"Database connection error: {str(e)}"
     
 
 def teacher_screen_register():
-    c1, c2 = st.columns(2, vertical_alignment='center', gap='xxlarge')
-    with c1:
-        header_dashboard()
-    with c2:
-        if st.button("Go back to Home", type='secondary', key='loginbackbtn', shortcut="control+backspace"):
-            st.session_state['login_type'] = None
-            st.rerun()
-
-
+    header_dashboard()
 
     st.header('Register your teacher profile')
 

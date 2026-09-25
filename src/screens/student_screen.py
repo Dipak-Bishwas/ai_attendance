@@ -88,23 +88,14 @@ def student_dashboard():
 
 
 def student_screen():
-
-
     style_background_dashboard()
     style_base_layout()
-
 
     if "student_data" in st.session_state:
         student_dashboard()
         return
-    
-    c1, c2 = st.columns(2, vertical_alignment='center', gap='xxlarge')
-    with c1:
-        header_dashboard()
-    with c2:
-        if st.button("Go back to Home", type='secondary', key='loginbackbtn', shortcut="control+backspace"):
-            st.session_state['login_type'] = None
-            st.rerun()
+
+    header_dashboard()
 
     st.header('Login using FaceID', text_alignment='center')
     st.space()

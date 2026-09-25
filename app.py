@@ -14,30 +14,39 @@ from src.screens.student_screen import student_screen
 
 from src.components.dialog_auto_enroll import auto_enroll_dialog
 
+
 def main():
     st.set_page_config(
         page_title='SnapClass - Making Attendance faster using AI',
-        page_icon= "https://i.ibb.co/YTYGn5qV/logo.png"
+        page_icon="https://i.ibb.co/YTYGn5qV/logo.png"
     )
-    if 'login_type' not in st.session_state:
+
+    # Sync browser URL query params with login_type for browser back/forward support
+    url_role = st.query_params.get('role')
+    if url_role in ['teacher', 'student']:
+        st.session_state['login_type'] = url_role
+    elif url_role is None:
         st.session_state['login_type'] = None
 
-    match st.session_state['login_type']:
+    match st.session_state.get('login_type'):
         case 'teacher':
             teacher_screen()
 
         case 'student':
             student_screen()
-        
-        case None:
-            home_screen()
 
+        case _:
+            home_screen()
 
     join_code = st.query_params.get('join-code')
     if join_code:
-        if st.session_state.login_type != 'student':
-            st.session_state.login_type = 'student'
+        if st.session_state.get('login_type') != 'student':
+            st.session_state['login_type'] = 'student'
+            st.query_params['role'] = 'student'
             st.rerun()
         if st.session_state.get('is_logged_in') and st.session_state.get('user_role') == 'student':
             auto_enroll_dialog(join_code)
-main()
+
+
+if __name__ == '__main__':
+    main()
