@@ -4,32 +4,31 @@ import streamlit as st
 def style_background_home():
     st.markdown("""
         <style>
-            /* Landing Page Background: Modern Deep Slate & Royal Indigo Mesh */
+            /* Landing Page Background: 21st.dev Modern Minimal Light Aesthetic */
             .stApp {
-                background: radial-gradient(ellipse at 50% 0%, #1E1B4B 0%, #0F172A 70%, #090D16 100%) !important;
-                color: #F8FAFC !important;
+                background: #FAFAFA !important;
+                background-image: radial-gradient(at 50% 0%, rgba(37, 99, 235, 0.05) 0px, transparent 60%) !important;
+                color: #09090B !important;
                 min-height: 100vh !important;
             }
 
             /* Portal Selection Columns / Cards */
             .stApp div[data-testid="stColumn"] {
-                background: rgba(30, 41, 59, 0.45) !important;
-                backdrop-filter: blur(20px) !important;
-                -webkit-backdrop-filter: blur(20px) !important;
-                border: 1px solid rgba(255, 255, 255, 0.1) !important;
-                padding: 2.25rem 2rem !important;
-                border-radius: 1.5rem !important;
-                box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05) inset !important;
-                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+                background: #FFFFFF !important;
+                border: 1px solid #E4E4E7 !important;
+                padding: 2rem 1.75rem !important;
+                border-radius: 0.875rem !important;
+                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.03) !important;
+                transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
                 display: flex !important;
                 flex-direction: column !important;
                 justify-content: space-between !important;
             }
 
             .stApp div[data-testid="stColumn"]:hover {
-                transform: translateY(-6px) !important;
-                border-color: rgba(99, 102, 241, 0.6) !important;
-                box-shadow: 0 30px 60px -15px rgba(79, 70, 229, 0.35), 0 0 0 1px rgba(99, 102, 241, 0.4) inset !important;
+                transform: translateY(-3px) !important;
+                border-color: #93C5FD !important;
+                box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.12), 0 8px 10px -6px rgba(37, 99, 235, 0.06) !important;
             }
 
             /* Responsive Adjustments for Mobile & Tablets */
@@ -37,7 +36,7 @@ def style_background_home():
                 .stApp div[data-testid="stColumn"] {
                     padding: 1.5rem 1.25rem !important;
                     margin-bottom: 1.25rem !important;
-                    border-radius: 1.25rem !important;
+                    border-radius: 0.75rem !important;
                 }
             }
         </style>
@@ -48,16 +47,16 @@ def style_background_dashboard():
     st.markdown("""
         <style>
             .stApp {
-                background: #F8FAFC !important;
-                color: #0F172A !important;
+                background: #FAFAFA !important;
+                color: #09090B !important;
             }
 
             .stApp div[data-testid="stColumn"] {
                 background: #FFFFFF !important;
-                border: 1px solid #E2E8F0 !important;
-                border-radius: 1.25rem !important;
-                padding: 1.75rem !important;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -2px rgba(0, 0, 0, 0.02) !important;
+                border: 1px solid #E4E4E7 !important;
+                border-radius: 0.875rem !important;
+                padding: 1.5rem !important;
+                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.03) !important;
             }
 
             @media (max-width: 768px) {
@@ -73,12 +72,13 @@ def style_background_dashboard():
 def style_base_layout():
     st.markdown("""
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@600;700&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
-            /* Global Typography */
+            /* Global Modern Minimal Typography */
             html, body, [class*="css"] {
-                font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
-                letter-spacing: -0.015em;
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+                letter-spacing: -0.011em;
+                color: #09090B !important;
             }
 
             /* Hide Top Bar & Streamlit Header */
@@ -99,8 +99,8 @@ def style_base_layout():
 
             /* Max Width Container */
             .block-container {
-                max-width: 1140px !important;
-                padding-top: 1.75rem !important;
+                max-width: 1120px !important;
+                padding-top: 1.5rem !important;
                 padding-bottom: 3.5rem !important;
                 padding-left: 1.5rem !important;
                 padding-right: 1.5rem !important;
@@ -108,64 +108,98 @@ def style_base_layout():
 
             /* Typography Hierarchy */
             h1 {
-                font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif !important;
+                font-family: 'Plus Jakarta Sans', 'Inter', sans-serif !important;
                 font-weight: 700 !important;
-                letter-spacing: -0.03em !important;
+                letter-spacing: -0.025em !important;
                 line-height: 1.15 !important;
+                color: #09090B !important;
             }
 
             h2, h3 {
-                font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif !important;
+                font-family: 'Plus Jakarta Sans', 'Inter', sans-serif !important;
                 font-weight: 600 !important;
                 letter-spacing: -0.02em !important;
+                color: #09090B !important;
             }
 
-            /* Button Design System */
+            /* Button Design System: 21st.dev Modern Minimal */
             button {
-                font-family: 'Plus Jakarta Sans', sans-serif !important;
-                font-weight: 600 !important;
-                font-size: 0.95rem !important;
-                border-radius: 0.85rem !important;
-                padding: 0.75rem 1.5rem !important;
-                min-height: 48px !important;
-                transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                font-family: 'Inter', sans-serif !important;
+                font-weight: 500 !important;
+                font-size: 0.9rem !important;
+                border-radius: 0.5rem !important;
+                padding: 0.6rem 1.25rem !important;
+                min-height: 42px !important;
+                transition: all 0.15s ease-in-out !important;
                 cursor: pointer !important;
             }
 
             button[kind="primary"] {
-                background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%) !important;
+                background: #2563EB !important;
                 color: #FFFFFF !important;
-                border: 1px solid rgba(255, 255, 255, 0.15) !important;
-                box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
+                border: 1px solid #1D4ED8 !important;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
             }
 
             button[kind="primary"]:hover {
-                transform: translateY(-2px) !important;
-                box-shadow: 0 8px 25px rgba(79, 70, 229, 0.45) !important;
-                background: linear-gradient(135deg, #4338CA 0%, #4F46E5 100%) !important;
+                background: #1D4ED8 !important;
+                border-color: #1E40AF !important;
+                transform: translateY(-1px) !important;
+                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
+            }
+
+            button[kind="primary"]:active {
+                background: #1E40AF !important;
+                transform: translateY(0px) !important;
             }
 
             button[kind="secondary"] {
-                background: rgba(241, 245, 249, 0.9) !important;
-                color: #334155 !important;
-                border: 1px solid #CBD5E1 !important;
+                background: #FFFFFF !important;
+                color: #18181B !important;
+                border: 1px solid #E4E4E7 !important;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
             }
 
             button[kind="secondary"]:hover {
-                background: #E2E8F0 !important;
-                color: #0F172A !important;
-                transform: translateY(-1px) !important;
+                background: #F4F4F5 !important;
+                color: #09090B !important;
+                border-color: #D4D4D8 !important;
             }
 
             button[kind="tertiary"] {
                 background: transparent !important;
-                color: #64748B !important;
-                border: 1px solid #E2E8F0 !important;
+                color: #52525B !important;
+                border: 1px solid #E4E4E7 !important;
             }
 
             button[kind="tertiary"]:hover {
-                background: #F1F5F9 !important;
-                color: #0F172A !important;
+                background: #F4F4F5 !important;
+                color: #09090B !important;
+                border-color: #D4D4D8 !important;
+            }
+
+            /* Streamlit Inputs & Selectboxes */
+            div[data-baseweb="input"], div[data-baseweb="select"] {
+                border-radius: 0.5rem !important;
+            }
+
+            input, select, textarea {
+                border-radius: 0.5rem !important;
+                font-family: 'Inter', sans-serif !important;
+            }
+
+            /* Streamlit Dialog / Modals */
+            div[data-testid="stDialog"] div[role="dialog"] {
+                border-radius: 0.875rem !important;
+                border: 1px solid #E4E4E7 !important;
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+            }
+
+            /* Dividers */
+            hr {
+                border-color: #E4E4E7 !important;
+                opacity: 0.8 !important;
+                margin: 1.5rem 0 !important;
             }
 
             /* Responsive adjustments for phones & small tablets */
@@ -176,10 +210,10 @@ def style_base_layout():
                     padding-right: 1rem !important;
                 }
                 h1 {
-                    font-size: 2.1rem !important;
+                    font-size: 2rem !important;
                 }
                 h2 {
-                    font-size: 1.5rem !important;
+                    font-size: 1.4rem !important;
                 }
                 button {
                     width: 100% !important;
