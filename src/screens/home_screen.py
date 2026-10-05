@@ -1,5 +1,15 @@
+import os
+import base64
 import streamlit as st
 from src.ui.base_layout import style_base_layout, style_background_home
+
+
+def get_image_base64(file_path):
+    if os.path.exists(file_path):
+        with open(file_path, "rb") as f:
+            encoded = base64.b64encode(f.read()).decode("utf-8")
+        return f"data:image/png;base64,{encoded}"
+    return ""
 
 
 def render_html(html_str):
@@ -17,71 +27,220 @@ def home_screen():
 
     logo_url = "https://i.ibb.co/YTYGn5qV/logo.png"
 
+    photos_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "photos"))
+    jiraya_path = os.path.join(photos_dir, "jiraya.png")
+    naruto_path = os.path.join(photos_dir, "naruto.png")
+
+    jiraya_img = get_image_base64(jiraya_path)
+    naruto_img = get_image_base64(naruto_path)
+
+    teacher_icon_html = f'<img src="{jiraya_img}" style="width: 44px; height: 44px; border-radius: 10px; object-fit: cover; border: 1px solid #E4E4E7;" />' if jiraya_img else '<div style="background: #EC4899; color: #FFFFFF; width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">👨‍🏫</div>'
+    student_icon_html = f'<img src="{naruto_img}" style="width: 44px; height: 44px; border-radius: 10px; object-fit: cover; border: 1px solid #E4E4E7;" />' if naruto_img else '<div style="background: #4F46E5; color: #FFFFFF; width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">🎓</div>'
+
     # ==========================================
     # 1. TOP NAVBAR (Reference Image 1)
     # ==========================================
     render_html(f"""
-<div style="background: #09090B; padding: 0.85rem 2rem; border-radius: 9999px; margin-bottom: 2.5rem; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);">
+<div id="snap-nav-wrapper" class="sticky-nav-container">
+<div class="top-navbar-box">
 <div style="display: flex; align-items: center; gap: 10px;">
-<img src="{logo_url}" style="height: 34px; width: 34px; object-fit: contain;" />
-<span style="font-family: 'Syne', 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1.45rem; color: #FFFFFF; letter-spacing: -0.03em;">SnapClass</span>
+<img src="{logo_url}" class="nav-brand-logo" />
+<span class="nav-brand-title">SnapClass</span>
 </div>
-<div style="display: flex; align-items: center; gap: 2.25rem;">
-<a href="#hero" style="color: #FAFAFA; text-decoration: none; font-size: 0.9rem; font-weight: 600;">Home</a>
-<a href="#features" style="color: #A1A1AA; text-decoration: none; font-size: 0.9rem; font-weight: 500;">Features</a>
-<a href="#journey" style="color: #A1A1AA; text-decoration: none; font-size: 0.9rem; font-weight: 500;">Journey</a>
-<a href="#tech" style="color: #A1A1AA; text-decoration: none; font-size: 0.9rem; font-weight: 500;">Tech Stack</a>
+<div class="nav-link-group">
+<a href="#hero" class="nav-link-item">Home</a>
+<a href="#features" class="nav-link-item">Features</a>
+<a href="#journey" class="nav-link-item">Journey</a>
+<a href="#tech" class="nav-link-item">Tech Stack</a>
 </div>
 <div>
-<a href="#get-started" style="background: #FFFFFF; color: #09090B; font-weight: 700; font-size: 0.86rem; padding: 9px 20px; border-radius: 9999px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 10px rgba(255, 255, 255, 0.25);">
+<a href="#get-started" class="nav-cta-btn">
 Start AI Attendance &rsaquo;
 </a>
 </div>
 </div>
+</div>
+
+<style>
+.sticky-nav-container {{
+    position: fixed !important;
+    top: 1rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: min(1180px, calc(100vw - 2.5rem)) !important;
+    z-index: 999999 !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}}
+
+.sticky-nav-container.scrolled {{
+    top: 0.5rem !important;
+    width: min(1080px, calc(100vw - 1.5rem)) !important;
+}}
+
+.top-navbar-box {{
+    background: rgba(9, 9, 11, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 0.85rem 2rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}}
+
+.top-navbar-box a,
+.top-navbar-box a:link,
+.top-navbar-box a:visited,
+.top-navbar-box a:hover,
+.top-navbar-box a:active {{
+    text-decoration: none !important;
+}}
+
+.sticky-nav-container.scrolled .top-navbar-box {{
+    padding: 0.45rem 1.35rem;
+    background: rgba(9, 9, 11, 0.96);
+    box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.22);
+}}
+
+.nav-brand-logo {{
+    height: 34px;
+    width: 34px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+}}
+
+.sticky-nav-container.scrolled .nav-brand-logo {{
+    height: 25px;
+    width: 25px;
+}}
+
+.nav-brand-title {{
+    font-family: 'Syne', 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 1.45rem;
+    color: #FFFFFF !important;
+    letter-spacing: -0.03em;
+    transition: all 0.3s ease;
+}}
+
+.sticky-nav-container.scrolled .nav-brand-title {{
+    font-size: 1.1rem;
+}}
+
+.nav-link-group {{
+    display: flex;
+    align-items: center;
+    gap: 2.25rem;
+    transition: all 0.3s ease;
+}}
+
+.sticky-nav-container.scrolled .nav-link-group {{
+    gap: 1.25rem;
+}}
+
+.nav-link-item,
+.nav-link-item:link,
+.nav-link-item:visited,
+.nav-link-item:hover,
+.nav-link-item:active,
+.nav-link-item:focus {{
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+}}
+
+.nav-link-item:hover {{
+    opacity: 0.8 !important;
+}}
+
+.sticky-nav-container.scrolled .nav-link-item,
+.sticky-nav-container.scrolled .nav-link-item:link,
+.sticky-nav-container.scrolled .nav-link-item:visited {{
+    font-size: 0.82rem !important;
+}}
+
+.nav-cta-btn {{
+    background: #FFFFFF;
+    color: #09090B;
+    font-weight: 700;
+    font-size: 0.86rem;
+    padding: 9px 20px;
+    border-radius: 9999px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.25);
+    transition: all 0.3s ease;
+}}
+
+.sticky-nav-container.scrolled .nav-cta-btn {{
+    padding: 5px 14px;
+    font-size: 0.76rem;
+}}
+</style>
+
+<script>
+(function() {{
+    function mountNavToApp() {{
+        const navContainer = document.getElementById('snap-nav-wrapper');
+        if (!navContainer) return;
+        
+        // Move nav container directly under .stApp or body so position: fixed works relative to screen
+        const target = document.querySelector('.stApp') || document.body;
+        if (navContainer.parentElement !== target) {{
+            target.appendChild(navContainer);
+        }}
+        
+        const mainSec = document.querySelector('section.main') || document.querySelector('.stApp') || window;
+        const scrollY = mainSec.scrollTop || window.scrollY || document.documentElement.scrollTop || 0;
+        
+        if (scrollY > 20) {{
+            navContainer.classList.add('scrolled');
+        }} else {{
+            navContainer.classList.remove('scrolled');
+        }}
+    }}
+
+    mountNavToApp();
+    setInterval(mountNavToApp, 150);
+
+    function onScrollHandler() {{
+        const navContainer = document.getElementById('snap-nav-wrapper');
+        if (!navContainer) return;
+        const mainSec = document.querySelector('section.main') || document.querySelector('.stApp');
+        const scrollY = (mainSec ? mainSec.scrollTop : 0) || window.scrollY || document.documentElement.scrollTop || 0;
+        if (scrollY > 20) {{
+            navContainer.classList.add('scrolled');
+        }} else {{
+            navContainer.classList.remove('scrolled');
+        }}
+    }}
+
+    window.addEventListener('scroll', onScrollHandler, {{ passive: true }});
+    document.addEventListener('scroll', onScrollHandler, {{ passive: true }});
+    setTimeout(function() {{
+        const mainSec = document.querySelector('section.main') || document.querySelector('.stApp');
+        if (mainSec) mainSec.addEventListener('scroll', onScrollHandler, {{ passive: true }});
+    }}, 500);
+}})();
+</script>
 """)
 
     # ==========================================
     # 2. HERO SECTION (Reference Image 1)
     # ==========================================
-    h_col1, h_col2, h_col3 = st.columns([1.1, 2.6, 1.1], gap="medium")
-
-    with h_col1:
-        # Left Floating Preview Card (Tilted Attendance Report Preview)
-        render_html("""
-<div style="margin-top: 3.5rem; transform: rotate(-3deg); transition: transform 0.3s ease;">
-<div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 1.25rem; border-radius: 1.25rem; box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.08);">
-<div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 0.875rem; padding: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
-<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-<div style="font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 800; color: #09090B;">📋 Attendance Report</div>
-<span style="background: #4F46E5; width: 10px; height: 10px; border-radius: 50%;"></span>
-</div>
-<div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.74rem;">
-<div style="display: flex; justify-content: space-between; align-items: center; background: #F8FAFC; padding: 5px 8px; border-radius: 6px;">
-<span style="font-weight: 600; color: #1E293B;">Hamza R.</span>
-<span style="background: #ECFDF5; color: #047857; font-weight: 700; font-size: 0.68rem; padding: 2px 6px; border-radius: 4px;">✅ Present</span>
-</div>
-<div style="display: flex; justify-content: space-between; align-items: center; background: #F8FAFC; padding: 5px 8px; border-radius: 6px;">
-<span style="font-weight: 600; color: #1E293B;">Ananya R.</span>
-<span style="background: #ECFDF5; color: #047857; font-weight: 700; font-size: 0.68rem; padding: 2px 6px; border-radius: 4px;">✅ Present</span>
-</div>
-<div style="display: flex; justify-content: space-between; align-items: center; background: #F8FAFC; padding: 5px 8px; border-radius: 6px;">
-<span style="font-weight: 600; color: #1E293B;">Akash S.</span>
-<span style="background: #FEF2F2; color: #B91C1C; font-weight: 700; font-size: 0.68rem; padding: 2px 6px; border-radius: 4px;">❌ Absent</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-""")
-
-    with h_col2:
+    hero_container = st.container()
+    with hero_container:
         # Center Hero Content
         render_html("""
-<div id="hero" style="text-align: center;">
-<div style="display: inline-flex; align-items: center; gap: 6px; background: #FFFFFF; border: 1px solid #E4E4E7; padding: 6px 18px; border-radius: 9999px; margin-bottom: 1.25rem; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.04);">
-<span style="width: 7px; height: 7px; background: #2563EB; border-radius: 50%;"></span>
-<span style="font-size: 0.84rem; font-weight: 600; color: #18181B;">Welcome to SnapClass</span>
-</div>
+<div id="hero" style="text-align: center; margin-top: 4.5rem;">
 <h1 style="font-family: 'Syne', 'Plus Jakarta Sans', sans-serif; font-size: 4rem; font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; margin: 0 0 1.25rem 0; color: #09090B;">
 AI Powered<br/>
 Attendance<br/>
@@ -93,43 +252,56 @@ Revolutionizing the classroom with next-gen computer vision and voice biometrics
 </div>
 """)
 
-        # CTA Buttons Centered
-        st.markdown("<div id='get-started' style='display: flex; justify-content: center;'></div>", unsafe_allow_html=True)
-        btn_c1, btn_c2 = st.columns([1.1, 1], gap="small")
+        # Two Portal Cards (Teacher & Student)
+        st.markdown("<div id='get-started' style='margin-top: 1.25rem;'></div>", unsafe_allow_html=True)
+        btn_c1, btn_c2 = st.columns(2, gap="medium")
+        
+        teacher_banner_html = f'<img src="{jiraya_img}" style="width: 100%; height: 300px; object-fit: cover; object-position: center top;" />' if jiraya_img else '<div style="background: #EC4899; color: #FFFFFF; width: 100%; height: 300px; display: flex; align-items: center; justify-content: center; font-size: 4rem;">👨‍🏫</div>'
+        student_banner_html = f'<img src="{naruto_img}" style="width: 100%; height: 300px; object-fit: cover; object-position: center top;" />' if naruto_img else '<div style="background: #4F46E5; color: #FFFFFF; width: 100%; height: 300px; display: flex; align-items: center; justify-content: center; font-size: 4rem;">🎓</div>'
+
         with btn_c1:
-            if st.button("Start as Teacher ›", type="primary", use_container_width=True, key="hero_start_teacher"):
-                st.session_state['login_type'] = 'teacher'
-                st.query_params['role'] = 'teacher'
-                st.rerun()
+            render_html(f"""
+<div style="background: #FFFFFF; border: 1px solid #E4E4E7; border-radius: 1.25rem; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.04); text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+<div style="width: 100%; height: 300px; background: #F4F4F5; overflow: hidden;">
+{teacher_banner_html}
+</div>
+<div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1;">
+<div>
+<div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem; color: #09090B; margin-bottom: 0.2rem;">Teacher Portal</div>
+<div style="font-size: 0.78rem; color: #71717A; margin-bottom: 0.6rem;">Manage subjects & AI rosters</div>
+<p style="font-size: 0.84rem; color: #52525B; line-height: 1.5; margin: 0;">
+Create courses, run multi-face AI analysis, and share class codes.
+</p>
+</div>
+<a href="?role=teacher" target="_self" style="display: block; width: 100%; padding: 0.75rem 1rem; background: #09090B; color: #FFFFFF; font-weight: 700; font-size: 0.88rem; text-align: center; border-radius: 9999px; text-decoration: none; margin-top: 1.25rem; box-shadow: 0 4px 12px rgba(0,0,0,0.12);">
+Start as Teacher &rsaquo;
+</a>
+</div>
+</div>
+""")
+
         with btn_c2:
-            if st.button("Enter as Student ›", type="secondary", use_container_width=True, key="hero_start_student"):
-                st.session_state['login_type'] = 'student'
-                st.query_params['role'] = 'student'
-                st.rerun()
-
-        # Hero Stat Pills Strip
-        render_html("""
-<div style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 1.75rem;">
-<span style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 4px 10px; border-radius: 9999px; font-size: 0.76rem; color: #334155;">⚡ <strong>&lt; 1s</strong> Multi-Face Scan</span>
-<span style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 4px 10px; border-radius: 9999px; font-size: 0.76rem; color: #334155;">🎯 <strong>99.8%</strong> Precision</span>
-<span style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 4px 10px; border-radius: 9999px; font-size: 0.76rem; color: #334155;">🎙️ <strong>256-d</strong> Voice AI</span>
+            render_html(f"""
+<div style="background: #FFFFFF; border: 1px solid #E4E4E7; border-radius: 1.25rem; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.04); text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+<div style="width: 100%; height: 300px; background: #F4F4F5; overflow: hidden;">
+{student_banner_html}
 </div>
-""")
-
-    with h_col3:
-        # Right Floating Preview Card (Tilted Snap ID Camera Card)
-        render_html("""
-<div style="margin-top: 3.5rem; transform: rotate(3deg); transition: transform 0.3s ease;">
-<div style="background: linear-gradient(135deg, #4F46E5 0%, #3B82F6 100%); border: 1px solid #4338CA; padding: 1.5rem 1.25rem; border-radius: 1.25rem; box-shadow: 0 20px 35px -10px rgba(79, 70, 229, 0.35); text-align: center; color: #FFFFFF;">
-<div style="font-size: 2.2rem; margin-bottom: 6px;">📸</div>
-<div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em;">SNAP ID</div>
-<div style="font-size: 0.75rem; color: #E0E7FF; margin-top: 4px;">1-Click Face Recognition</div>
-<div style="background: rgba(255, 255, 255, 0.15); border: 1px dashed rgba(255, 255, 255, 0.3); border-radius: 8px; padding: 6px; margin-top: 10px; font-size: 0.7rem; color: #FFFFFF;">
-🎯 Confidence: 99.8%
+<div style="padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1;">
+<div>
+<div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem; color: #09090B; margin-bottom: 0.2rem;">Student Portal</div>
+<div style="font-size: 0.78rem; color: #71717A; margin-bottom: 0.6rem;">FaceID login & attendance stats</div>
+<p style="font-size: 0.84rem; color: #52525B; line-height: 1.5; margin: 0;">
+Login with 1-click FaceID scan, enroll via QR, and track records.
+</p>
 </div>
+<a href="?role=student" target="_self" style="display: block; width: 100%; padding: 0.75rem 1rem; background: #09090B; color: #FFFFFF; font-weight: 700; font-size: 0.88rem; text-align: center; border-radius: 9999px; text-decoration: none; margin-top: 1.25rem; box-shadow: 0 4px 12px rgba(0,0,0,0.12);">
+Enter as Student &rsaquo;
+</a>
 </div>
 </div>
 """)
+
+
 
     # ==========================================
     # 3. INNOVATIVE FEATURES SECTION (Reference Image 3)

@@ -11,6 +11,7 @@ def create_subject_dialog(teacher_id):
     sub_section = st.text_input("Section", placeholder="A")
 
 
+    st.markdown('<div class="pink-pill-btn" style="margin-top: 1rem;">', unsafe_allow_html=True)
     if st.button("Create Subject Now", type='primary', width='stretch'):
         if sub_id and sub_name and sub_section:
             try:
@@ -21,3 +22,4 @@ def create_subject_dialog(teacher_id):
                 st.error(f"Error: {str(e)}")
         else:
             st.warning("Please fill all the fields")
+    st.markdown('</div>', unsafe_allow_html=True)

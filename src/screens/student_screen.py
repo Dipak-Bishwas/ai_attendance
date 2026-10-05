@@ -17,26 +17,38 @@ from src.components.subject_card import subject_card
 def student_dashboard():
     student_data = st.session_state.student_data
     student_id = student_data['student_id']
-    c1, c2 = st.columns(2, vertical_alignment='center', gap='xxlarge')
+    c1, c2 = st.columns([1.2, 1.8], vertical_alignment='center')
     with c1:
         header_dashboard()
     with c2:
-        st.subheader(f"""Welcome, {student_data['name']} """)
-        if st.button("Logout", type='secondary', key='loginbackbtn', shortcut="control+backspace"):
+        st.markdown(f"""
+            <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 8px;">
+                <div style="font-family: 'Inter', -apple-system, sans-serif; font-size: 1.45rem; font-weight: 800; color: #09090B; letter-spacing: -0.02em;">
+                    Welcome, {student_data.get('name', 'Student')}!
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        st.markdown('<div class="pink-logout-btn">', unsafe_allow_html=True)
+        if st.button("Logout ⌘+L", type='primary', key='loginbackbtn', shortcut="control+shift+l"):
             st.session_state['is_logged_in'] = False
             del st.session_state.student_data 
             st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
 
+    st.markdown('<div style="height: 1.5rem;"></div>', unsafe_allow_html=True)
 
-    st.space()
-
-    c1, c2 =st.columns(2)
+    c1, c2 = st.columns([1.2, 1], vertical_alignment='center')
     with c1:
-        st.header('Your Enrolled Subjects')
+        st.markdown("""
+            <h1 class="snap-retro-title" style="font-size: 2.2rem; margin: 0.25rem 0 1rem 0;">
+                Your Enrolled<br/>Subjects
+            </h1>
+        """, unsafe_allow_html=True)
     with c2:
-        if st.button('Enroll in Subject', type='primary', width='stretch'):
+        st.markdown('<div class="pink-pill-btn">', unsafe_allow_html=True)
+        if st.button('Enroll in Subject', width='stretch'):
             enroll_dialog()
-
+        st.markdown('</div>', unsafe_allow_html=True)
 
     st.divider()
 
@@ -97,17 +109,29 @@ def student_screen():
 
     header_dashboard()
 
-    st.header('Login using FaceID', text_alignment='center')
-    st.space()
-    st.space()
-    
+    st.markdown("""
+        <div class="white-card" style="max-width: 600px; margin: 1rem auto; padding: 2rem; text-align: center;">
+            <h2 class="snap-retro-title" style="font-size: 1.8rem; margin: 0 0 1rem 0;">
+                Login using FaceID
+            </h2>
+    """, unsafe_allow_html=True)
+
+    input_mode = st.radio("Choose Login Method:", ["📷 Webcam Camera", "📁 Upload Photo"], horizontal=True)
+    photo_source = None
+
+    if input_mode == "📷 Webcam Camera":
+        photo_source = st.camera_input("Position your face in the center")
+    else:
+        photo_source = st.file_uploader("Upload a face photo", type=["jpg", "jpeg", "png"])
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
     show_registration = False
-    photo_source = st.camera_input("Position your face in the center")
 
     if photo_source:
         img = np.array(Image.open(photo_source))
 
-        with st.spinner('AI is scanning..'):
+        with st.spinner('AI is scanning...'):
             detected, all_ids, num_faces = predict_attendance(img)
 
             if num_faces == 0:

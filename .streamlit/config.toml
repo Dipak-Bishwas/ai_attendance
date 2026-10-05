@@ -1,9 +1,7 @@
-[theme]
-primaryColor = "#2563EB"
-backgroundColor = "#FAFAFA"
-secondaryBackgroundColor = "#FFFFFF"
-textColor = "#09090B"
-font = "sans serif"
-
 [server]
-headless = true
+runOnSave = true
+fileWatcherType = "watchdog"
+
+[browser]
+gatherUsageStats = false
+
